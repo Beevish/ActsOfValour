@@ -1,7 +1,8 @@
 package com.beevishapps.vinayakv.real;
 
 import android.content.Context;
-import android.content.Intent;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -87,24 +88,24 @@ Log.w("output:::::", String.valueOf(award.pcolor));
 //        }
     }
 
-    @Override
-    public void onViewAttachedToWindow(MyViewHolder holder) {
-
-        super.onViewAttachedToWindow(holder);
-
-        setAnimation(holder.itemView);//setting animation to items while loading
-
-    }
-
-    private void clearAnimation(View view){
-        view.clearAnimation();
-    }
-
-    @Override
-    public void onViewDetachedFromWindow(MyViewHolder holder) {
-        super.onViewDetachedFromWindow(holder);
-        clearAnimation(holder.itemView);
-    }
+//    @Override
+//    public void onViewAttachedToWindow(MyViewHolder holder) {
+//
+//        super.onViewAttachedToWindow(holder);
+//
+//        setAnimation(holder.itemView);//setting animation to items while loading
+//
+//    }
+//
+//    private void clearAnimation(View view){
+//        view.clearAnimation();
+//    }
+//
+//    @Override
+//    public void onViewDetachedFromWindow(MyViewHolder holder) {
+//        super.onViewDetachedFromWindow(holder);
+//        clearAnimation(holder.itemView);
+//    }
 
     @Override
     public int getItemCount() {
@@ -147,25 +148,50 @@ Log.w("output:::::", String.valueOf(award.pcolor));
 
             if(a.getTitle()=="Param Veer Chakra")
                         {
-                            Intent pvc = new Intent(c, Pvc_Activity.class);
-                            c.startActivity(pvc);
+                            // this will clear the back stack and displays no animation on the screen
+                            FragmentManager fragmentManager = ((MainActivity) c).getSupportFragmentManager();
+                            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);//.................clearing the stack
+
+                            pvcFragment fragment = new pvcFragment();
+                            FragmentTransaction fragmentTransaction = ((MainActivity) c).getSupportFragmentManager().beginTransaction().addToBackStack("pvcAdapter");
+                            fragmentTransaction.replace(R.id.fragment_container, fragment);
+                            fragmentTransaction.commit();
 
                         }
                         if(a.getTitle()=="Ashoka Chakra")
                         {
-                            Intent ac = new Intent( c, Ac_Activity.class);
-                            c.startActivity(ac);
+                            // this will clear the back stack and displays no animation on the screen
+                            FragmentManager fragmentManager = ((MainActivity) c).getSupportFragmentManager();
+                            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);//.................clearing the stack
+
+                            acFragment fragment = new acFragment();
+                            FragmentTransaction fragmentTransaction = ((MainActivity) c).getSupportFragmentManager().beginTransaction().addToBackStack("acAdapter");
+                            fragmentTransaction.replace(R.id.fragment_container, fragment);
+                            fragmentTransaction.commit();
 
                         }
                         if(a.getTitle()=="Maha Veer Chakra")
                         {
-                            Intent mvc = new Intent( c, Mvc_Activity.class);
-                            c.startActivity(mvc);
+                            // this will clear the back stack and displays no animation on the screen
+                            FragmentManager fragmentManager = ((MainActivity) c).getSupportFragmentManager();
+                            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);//.................clearing the stack
+
+                            mvcFragment fragment = new mvcFragment();
+                            FragmentTransaction fragmentTransaction = ((MainActivity) c).getSupportFragmentManager().beginTransaction().addToBackStack("mvcAdapter");
+                            fragmentTransaction.replace(R.id.fragment_container, fragment);
+                            fragmentTransaction.commit();
                         }
                         if(a.getTitle()=="Veer Chakra")
                         {
-                            Intent kc = new Intent(c, Kc_Activity.class);
-                            c.startActivity(kc);
+
+                            // this will clear the back stack and displays no animation on the screen
+                            FragmentManager fragmentManager = ((MainActivity) c).getSupportFragmentManager();
+                            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);//.................clearing the stack
+
+                            vcFragment fragment = new vcFragment();
+                            FragmentTransaction fragmentTransaction = ((MainActivity) c).getSupportFragmentManager().beginTransaction().addToBackStack("vcAdapter");
+                            fragmentTransaction.replace(R.id.fragment_container, fragment);
+                            fragmentTransaction.commit();
                         }
 
 

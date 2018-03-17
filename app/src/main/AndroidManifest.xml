@@ -16,10 +16,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".Pvc_Activity" />
-        <activity android:name=".Mvc_Activity" />
-        <activity android:name=".Kc_Activity" />
-        <activity android:name=".Ac_Activity" />
         <activity
             android:name=".Pvc_Details"
             android:theme="@style/AppTheme.NoActionBar"></activity>

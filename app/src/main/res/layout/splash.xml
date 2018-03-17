@@ -4,7 +4,7 @@
     android:id="@+id/rl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splashback3"
+    android:background="@drawable/splashback4"
     android:fitsSystemWindows="true"
 
     android:orientation="vertical"
@@ -59,8 +59,8 @@
 
         android:fontFamily="serif"
         android:gravity="center"
+        android:text="Headphones Recommended"
         android:textColor="#ffffff"
         android:textSize="14sp"
-        android:textStyle="italic"
-        android:text="Headphones Recommended" />
+        android:textStyle="italic" />
 </RelativeLayout>

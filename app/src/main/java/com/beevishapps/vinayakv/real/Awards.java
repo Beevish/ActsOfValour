@@ -5,11 +5,9 @@ package com.beevishapps.vinayakv.real;
  */
 public class Awards {
 
-    private String title, text1, text2;
-
-    private int imageset;
-
     public int pcolor;
+    private String title, text1, text2;
+    private int imageset;
 
 
     public Awards() {
@@ -34,32 +32,32 @@ public class Awards {
         return title;
     }
 
-    public String getText1() {
-        return text1;
-    }
-
-    public String getText2() {
-        return text2;
-    }
-
-    public int getImageset() {
-        return imageset;
-    }
-
-//    public int getPcolor() {
-//        return pcolor;
-//    }
-
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getText1() {
+        return text1;
     }
 
     public void setText1(String text1) {
         this.text1 = text1;
     }
 
+//    public int getPcolor() {
+//        return pcolor;
+//    }
+
+    public String getText2() {
+        return text2;
+    }
+
     public void setText2(String text2) {
         this.text2 = text2;
+    }
+
+    public int getImageset() {
+        return imageset;
     }
 
     public void setImageset(int imageset) {

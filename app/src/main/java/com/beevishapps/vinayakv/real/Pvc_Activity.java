@@ -1,35 +1,19 @@
 package com.beevishapps.vinayakv.real;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.graphics.Palette;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
-import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 public class Pvc_Activity extends AppCompatActivity{
 
 
-    RecyclerView recyclerView;
-    //PvcAwardeesBean responseObj;
-    newResponse.PVCBean responseObj;
-    String url="";
-    Gson gson;
-    private HeroPicAdapter mAdapter;
+    //    RecyclerView recyclerView;
+//    newResponse.PVCBean responseObj;
+//    String url="";
+//    Gson gson;
+//    private HeroPicAdapter mAdapter;
     int pcolor;
 
     boolean online;
@@ -42,17 +26,17 @@ public class Pvc_Activity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pvc_);
 
-        recyclerView = (RecyclerView) findViewById(R.id.pvcRc);//.......................................taking the new recycler view;
-
-
-        online=isOnline();  //................................................................................................method for checking if mobile is online or not......................
-        Log.w("Output::::::::::", String.valueOf(online));
-
-        String awardsString=loadJSONFromAsset();
-        gson=new Gson();
-        responseObj = new newResponse.PVCBean();
-        responseObj = gson.fromJson(awardsString,newResponse.PVCBean.class);
-        mAdapter= new HeroPicAdapter(Pvc_Activity.this,responseObj.getHeros());
+//        recyclerView = (RecyclerView) findViewById(R.id.pvcRc);//.......................................taking the new recycler view;
+//
+//
+//        online=isOnline();  //................................................................................................method for checking if mobile is online or not......................
+//        Log.w("Output::::::::::", String.valueOf(online));
+//
+//        String awardsString=loadJSONFromAsset();
+//        gson=new Gson();
+//        responseObj = new newResponse.PVCBean();
+//        responseObj = gson.fromJson(awardsString,newResponse.PVCBean.class);
+//        mAdapter= new HeroPicAdapter(Pvc_Activity.this,responseObj.getHeros());
         //recyclerView.setAdapter(mAdapter);
 
 
@@ -86,12 +70,12 @@ public class Pvc_Activity extends AppCompatActivity{
 
         //mAdapter = new HeroPicAdapter(Heropics_List, this);
 
-        RecyclerView.LayoutManager mLayoutManger = new GridLayoutManager((getApplicationContext()), 2, LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(mLayoutManger);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-//        getPColor(url, responseObj.getHeros());
-        recyclerView.setAdapter(mAdapter);
+//        RecyclerView.LayoutManager mLayoutManger = new GridLayoutManager((getApplicationContext()), 2, LinearLayoutManager.VERTICAL, false);
+//        recyclerView.setLayoutManager(mLayoutManger);
+//        recyclerView.setItemAnimator(new DefaultItemAnimator());
+//
+////        getPColor(url, responseObj.getHeros());
+//        recyclerView.setAdapter(mAdapter);
 
 /*
 *  id = in.readString();
@@ -116,12 +100,12 @@ public class Pvc_Activity extends AppCompatActivity{
 
 
     //................................................................................................method for checking if mobile is online or not......................
-    public boolean isOnline() {
-        ConnectivityManager cm =
-                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        return netInfo != null && netInfo.isConnectedOrConnecting();
-    }
+//    public boolean isOnline() {
+//        ConnectivityManager cm =
+//                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+//        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+//        return netInfo != null && netInfo.isConnectedOrConnecting();
+//    }
 
 
 
@@ -129,32 +113,32 @@ public class Pvc_Activity extends AppCompatActivity{
     //json getting it from the file inside the asset folder....................................................................
 
 
-    public String loadJSONFromAsset() {
-        String json = null;
-
-        try {
-
-            InputStream is = getAssets().open("pvcData.json");
-            //InputStream is = getAssets().open("pvcData.json");
-
-            int size = is.available();
-
-            byte[] buffer = new byte[size];
-
-            is.read(buffer);
-
-            is.close();
-
-            json = new String(buffer, "UTF-8");
-
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return json;
-
-    }
+//    public String loadJSONFromAsset() {
+//        String json = null;
+//
+//        try {
+//
+//            InputStream is = getAssets().open("pvcData.json");
+//            //InputStream is = getAssets().open("pvcData.json");
+//
+//            int size = is.available();
+//
+//            byte[] buffer = new byte[size];
+//
+//            is.read(buffer);
+//
+//            is.close();
+//
+//            json = new String(buffer, "UTF-8");
+//
+//
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//            return null;
+//        }
+//        return json;
+//
+//    }
 
 
 
@@ -162,24 +146,24 @@ public class Pvc_Activity extends AppCompatActivity{
 
 
     //Pallete coloring.......................................
-    void getPColor(int id, final newResponse.PVCBean.HerosBean pp) {
-
-
-        Bitmap photo = BitmapFactory.decodeResource(getApplicationContext().getResources(), id);
-
-
-        // Bitmap myBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.nyancat);
-        if (photo != null && !photo.isRecycled()) {
-            Palette palette = Palette.from(photo).generate();
-            int default1 = getApplicationContext().getResources().getColor(R.color.colorPrimary);
-            int p1color = palette.getMutedColor(getApplicationContext().getResources().getColor(android.R.color.black)); //palette.getMutedColor(getApplicationContext().getResources().getColor(android.R.color.black));
-            //int p1color = palette.getVibrantColor(getApplicationContext().getResources().getColor(android.R.color.black)); //palette.getMutedColor(getApplicationContext().getResources().getColor(android.R.color.black));
-
-
-            pp.pColor = p1color;
-
-
-        }
+//    void getPColor(int id, final newResponse.PVCBean.HerosBean pp) {
+//
+//
+//        Bitmap photo = BitmapFactory.decodeResource(getApplicationContext().getResources(), id);
+//
+//
+//        // Bitmap myBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.nyancat);
+//        if (photo != null && !photo.isRecycled()) {
+//            Palette palette = Palette.from(photo).generate();
+//            int default1 = getApplicationContext().getResources().getColor(R.color.colorPrimary);
+//            int p1color = palette.getMutedColor(getApplicationContext().getResources().getColor(android.R.color.black)); //palette.getMutedColor(getApplicationContext().getResources().getColor(android.R.color.black));
+//            //int p1color = palette.getVibrantColor(getApplicationContext().getResources().getColor(android.R.color.black)); //palette.getMutedColor(getApplicationContext().getResources().getColor(android.R.color.black));
+//
+//
+//            pp.pColor = p1color;
+//
+//
+//        }
 
 
     }
@@ -197,4 +181,4 @@ public class Pvc_Activity extends AppCompatActivity{
 //            }
 //        });
 //    }
-}
+//}

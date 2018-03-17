@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -24,13 +23,9 @@ import java.util.List;
  */
 public class HeroPicAdapter extends RecyclerView.Adapter<HeroPicAdapter.MyViewHolder> {
 
-    private List<newResponse.PVCBean.HerosBean> aAwarditem = new ArrayList<newResponse.PVCBean.HerosBean>();
-
-
     Context context;
-
-
     boolean online;
+    private List<newResponse.PVCBean.HerosBean> aAwarditem = new ArrayList<newResponse.PVCBean.HerosBean>();
 
 //    public HeroPicAdapter(List<Hero_Pics> AwardsList, Context context) {
 //        this.Heros_picsList = AwardsList;
@@ -178,7 +173,7 @@ public class HeroPicAdapter extends RecyclerView.Adapter<HeroPicAdapter.MyViewHo
 
             imageView = (ImageView) itemView.findViewById(R.id.Hero_imageView);
 
-            placeNameHolder = (LinearLayout) itemView.findViewById(R.id.placeNameHolder);
+            placeNameHolder = itemView.findViewById(R.id.placeNameHolder);
 
 
             itemView.setClickable(true);

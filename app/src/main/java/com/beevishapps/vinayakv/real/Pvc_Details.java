@@ -1,7 +1,6 @@
 package com.beevishapps.vinayakv.real;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -31,27 +30,27 @@ import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 
-public class Pvc_Details extends AppCompatActivity implements OnShowcaseEventListener{
+public class Pvc_Details extends AppCompatActivity implements OnShowcaseEventListener {
 
 
-    private AppBarLayout abar;
+    private static final float ALPHA_DIM_VALUE = 0.1f;
+    private static final String TAG = "Pvc_Details";
     Toolbar tbar;
     TextView descrip, descrip1, descrip2, descrip3, reference, marqueetext;
-    private ImageView collap_imgView;
     TextToSpeech t1;
     MediaPlayer mp;
     Button button1, button2, button3, button4, button5;
     TextView textView;
     ShowcaseView sv;
-    private static final float ALPHA_DIM_VALUE = 0.1f;
     int MAX_SPEECH_ITEM_CHAR_LENGTH = 3999;
     NestedScrollView Nsv;
     int play_button_pressed = 0;
-
+    private AppBarLayout abar;
+    private ImageView collap_imgView;
+    private newResponse.PVCBean.HerosBean p;
+    private ArrayList<String> strings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,15 +58,13 @@ public class Pvc_Details extends AppCompatActivity implements OnShowcaseEventLis
 
 
         getWindow().setSharedElementEnterTransition(TransitionInflater.from(this).inflateTransition(R.transition.shared_element_transition_a));
-
         setContentView(R.layout.activity_pvc_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-
         Intent i = getIntent();
-        newResponse.PVCBean.HerosBean p = (newResponse.PVCBean.HerosBean) i.getParcelableExtra("name_of_extra");
+        p = i.getParcelableExtra("name_of_extra");
 
-//textView=(TextView)findViewById(R.id.MarqueeText);
+
         Nsv = (NestedScrollView) findViewById(R.id.nestedscrollview);
         abar = (AppBarLayout) findViewById(R.id.app_bar);
         tbar = (Toolbar) findViewById(R.id.toolbar);
@@ -78,7 +75,7 @@ public class Pvc_Details extends AppCompatActivity implements OnShowcaseEventLis
         descrip3 = (TextView) findViewById(R.id.descrip3);
         reference = (TextView) findViewById(R.id.reference);
         marqueetext = (TextView) findViewById(R.id.marqueetext);
-//textView.setSelected(true);
+
         tbar.setTitle(p.getName());
         descrip.setText(p.getDescription());
         descrip1.setText(p.getDescription1());
@@ -94,9 +91,9 @@ public class Pvc_Details extends AppCompatActivity implements OnShowcaseEventLis
             public void onInit(int status) {
                 if (status != TextToSpeech.ERROR) {
 
-                    //Voice V =new Voice("en","Indian");
+
                     Locale locale = new Locale("en", "IN");//..............................Indian Accent......................................
-//                    getDefaultVoice().
+
                     t1.setLanguage(locale);
 
 
@@ -113,7 +110,7 @@ public class Pvc_Details extends AppCompatActivity implements OnShowcaseEventLis
 
         FloatingActionButton actionButton = new FloatingActionButton.Builder(this)
 
-//                .setTheme(R.color.colorPrimaryDark)
+
                 .setContentView(icon)
                 .build();
 //actionButton
@@ -125,7 +122,6 @@ public class Pvc_Details extends AppCompatActivity implements OnShowcaseEventLis
 // repeat many times:Button 1
 
         itemIcon1.setImageDrawable(getDrawable(R.drawable.ic_play_arrow));
-//button1=new SubActionButton.Builder(this).setTheme(R.color.green).setContentView(itemIcon1).build();
 
 
         //..................button 1.............................................. for starting the tts.......................................................................
@@ -142,61 +138,99 @@ public class Pvc_Details extends AppCompatActivity implements OnShowcaseEventLis
 
                     mp.setVolume((float) 0.3, (float) 0.3);//..........controlling the volume of bacground music
                     mp.setLooping(true);
-                  String toSpeak = descrip3.getText().toString();//...................................text to speech.......................................
+                    String toSpeak = p.getDescription3();//...................................text to speech.......................................
 
-                    if (descrip3.length() >= MAX_SPEECH_ITEM_CHAR_LENGTH) {
-                        //........................................................................spilting string into chunks.....................................
-                        List<String> strings = new ArrayList<String>();
-                        int index = 0, count = 0;
-                        while (index < descrip3.length()) {
-                            count++;
-                            strings.add(descrip3.getText().toString().substring(index, Math.min(index + MAX_SPEECH_ITEM_CHAR_LENGTH, descrip3.length())));
-                            index += MAX_SPEECH_ITEM_CHAR_LENGTH;
-                        }
-
-                        t1.setSpeechRate((float) 0.8);//...................................controlling the speed of reading.....................
-                        Bundle params = new Bundle();
-                        params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "");
-                        t1.speak(strings.get(0), TextToSpeech.QUEUE_FLUSH,params, toSpeak.substring(0,toSpeak.indexOf(".")));//.............misses the first chunk therefore oth element playing it first
-
-                        for (int i = 1; i < count; i++) {
-                            t1.speak(strings.get(i), TextToSpeech.QUEUE_ADD,params, toSpeak.substring(0,toSpeak.indexOf(".")));
-                        }
-
-
-                    }
-                    // isValid();//.....................................................Checking length of the description............................................................................................
-                    else {
-
-
-                        t1.setSpeechRate((float) 0.8);//...................................controlling the speed of reading.....................
-                        Bundle params = new Bundle();
-                        params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "");
-
-                        t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH,params, toSpeak.substring(0,toSpeak.indexOf(".")));//......................substring till fullstop
-color1stsentence();
-
-//                    t1.speak(toSpeak1, TextToSpeech.QUEUE_ADD, null, null);//........................spilting the string and adding the remaining string in the queue..................................
+//                    if (descrip3.length() >= MAX_SPEECH_ITEM_CHAR_LENGTH) {
+                    //........................................................................spilting string into chunks.....................................
+                    strings = new ArrayList<String>();
+                    int index = 0, count = 0;
+                    while (index < p.getDescription3().length()) {
+                        count++;
+                        strings.add(p.getDescription3().substring(index, p.getDescription3().indexOf(".", index)));
+                        index = p.getDescription3().indexOf(".", index) + 1;
                     }
 
+
+                    t1.setSpeechRate((float) 0.8);//...................................controlling the speed of reading.....................
+                    Bundle params = new Bundle();
+                    params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "");
+//                    t1.speak(strings.get(0), TextToSpeech.QUEUE_FLUSH, params, "0");//.............misses the first chunk therefore oth element playing it first
+//
+//                    for (int i = 1; i < count; i++) {
+//                        t1.speak(strings.get(i), TextToSpeech.QUEUE_ADD, params, i + "");
+//                    }
+
+
+//..............................................................speaking started  working while the words are spoken...............................................................
                     t1.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                        String highlightedText = "";
+
+
                         @Override
                         public void onStart(String s) {//.........................................................when tts starts to speak..................
+                            highlightedText = "";
+                            Log.w("::onStart:hiihih::", s);
 
-                            Log.w("::onStart:hiihih::",s);
+                            try {
+
+                                int i = Integer.parseInt(s);
+
+                                for (int j = 0; j < strings.size(); j++) {
+                                    Log.d(TAG, "onStart: " + strings.get(j));
+                                    if (i == j) {
+                                        highlightedText = highlightedText + "<br>" + "<font color='red'>" + strings.get(j) + "</font>" + "." + "<br>";
+                                    } else {
+                                        highlightedText = highlightedText + "<br>" + strings.get(j) + ".";
+                                    }
+                                }
+
+
+                            } catch (NumberFormatException e) {
+                                highlightedText = p.getDescription3();
+                            } finally {
+
+                                runOnUiThread(new Runnable() {
+
+                                    public void run() {
+                                        descrip3.setText(Html.fromHtml(highlightedText));
+                                    }
+                                });
+
+                            }
+
                         }
 
                         @Override
                         public void onDone(String s) {//...........................................................when tts is finished speaking.....................
-                            Log.w("::onDone:hiihih::",s);
-                            mp.stop();
+                            Log.w("::onDone:hiihih::", s);
+                            Log.w("::onDone:hiihih::", String.valueOf(strings.size()));
+                            //...........................................................................calculating the length of the string to stop background music...........................................................
+                            int i = Integer.parseInt(s);
+                            int j = Integer.parseInt(String.valueOf(strings.size()));
+                            if (i == j - 1) {
+                                mp.stop();
+
+                            }
+
+                            //mp.stop();
                         }
+
 
                         @Override
                         public void onError(String s) {
+                            Log.d(TAG, "onError() called with: s = [" + s + "]");
 
                         }
+
+
                     });
+
+                    t1.speak(strings.get(0), TextToSpeech.QUEUE_FLUSH, params, "0");//.............misses the first chunk therefore oth element playing it first
+
+                    for (int i = 1; i < count; i++) {
+                        t1.speak(strings.get(i), TextToSpeech.QUEUE_ADD, params, i + "");
+                    }
+
 
 
                 }
@@ -254,7 +288,6 @@ color1stsentence();
         lps.setMargins(margin, margin, margin, margin);
 
 
-        //ViewTarget target = new ViewTarget(actionMenu.getActivityContentView().getId(), this);
         ViewTarget target = new ViewTarget(R.id.fab, this);
 
         sv = new ShowcaseView.Builder(this)
@@ -276,6 +309,7 @@ color1stsentence();
         Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/tomnr.ttf");
         descrip3.setTypeface(custom_font);
         reference.setTypeface(custom_font);
+        reference.setTypeface(reference.getTypeface(), Typeface.BOLD);//.......keeping the typeface as it is and changing the style to Bold............................
         marqueetext.setTypeface(custom_font);
 
         String imageurl = p.getUrl();
@@ -297,23 +331,14 @@ color1stsentence();
                 .into(collap_imgView);
 
 
-        // abar.setBackgroundResource(Integer.parseInt(p.getUrl()));
-
-
     }
 
     private void color1stsentence() {
 
-        String fullsen=descrip3.getText().toString();
+        String fullsen = descrip3.getText().toString();
 
         String firstsen = fullsen.substring(0, fullsen.indexOf("."));
 
-
-
-//        for(int i=0;i<fullsen.length();indexadd++) {
-
-//            Log.w("::indextobeadded::", String.valueOf(i));
-//        }
 
     }
 
@@ -321,7 +346,7 @@ color1stsentence();
     protected void onStop() {
         if (mp != null) {
 
-//            t1.shutdown();
+
             mp.stop();
         }
         super.onStop();
@@ -330,7 +355,7 @@ color1stsentence();
     public void onPause() {
         if (t1 != null && mp != null) {
             t1.stop();
-//            t1.shutdown();
+
             mp.stop();
         }
         super.onPause();
@@ -368,9 +393,6 @@ color1stsentence();
     public void onShowcaseViewTouchBlocked(MotionEvent motionEvent) {
 
     }
-
-
-
 
 
 }
